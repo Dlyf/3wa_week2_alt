@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello React</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- babel => compilation du JSX -->
+  <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+
+    const rootEl = document.getElementById('root');
+    ReactDOM.createRoot(rootEl).render(<App />);
+
+    function App(props) {
+      const students = [
+        { notes: [12, 11, 10], name: "Alan" },
+        { notes: [18, 10, 19], name: "Alice" },
+        { notes: [10, 9, 11], name: "Bernard" },
+        { notes: [11, 17, 19], name: "Sophie" },
+      ];
+
+      return (<ul>
+        {students.map((student, index) => (
+          <Student name={student.name} notes={student.notes} key={index} />
+        ))}
+      </ul>)
+    }
+
+    function Student(props) {
+      // calcul moyenne
+      const moyenne = props.notes.reduce((total, note) => total + note) / props.notes.length;
+
+      return <li>L'étudiant {props.name} a une moyenne de : {moyenne}/20</li>
+    }
+
+  </script>
+</body>
+
+</html>
