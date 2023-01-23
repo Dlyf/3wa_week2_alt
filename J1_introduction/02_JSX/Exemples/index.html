@@ -33,6 +33,8 @@
     }
 
     function Jedi(props) {
+      props.name = props.name.toUpperCase();
+
       const title = props.isMaster ? 'Maître' : 'jeune Padawan';
       return <h1>Bienvenue {title} {props.name}</h1>
     }
