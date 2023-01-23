@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello React</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- babel => compilation du JSX -->
+  <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+  <style>
+    .heading {
+      color: purple;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const root = document.getElementById('root');
+
+    function Menu(props) {
+      return (<nav>
+        <h3>Menu n°{props.nb}</h3>
+        <ul>
+          <li><a href="/home">Accueil</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </nav>);
+    }
+
+    function Jedi(props) {
+      const title = props.isMaster ? 'Maître' : 'jeune Padawan';
+      return <h1>Bienvenue {title} {props.name}</h1>
+    }
+
+    /* class Jedi extends React.Component {
+      render() {
+        const title = this.props.isMaster ? 'Maître' : 'jeune Padawan';
+        return <h1>Bienvenue {title} {this.props.name}</h1>
+      }
+    } */
+
+    // Rendu dans le DOM
+    ReactDOM.createRoot(root).render(
+      <div>
+        <Menu nb={1} />
+        <Jedi isMaster={true} name="Obi-Wan" />
+        <Jedi isMaster={false} name="Anakin" />
+        <Menu nb={2} />
+      </div>
+    );
+  </script>
+</body>
+
+</html>
