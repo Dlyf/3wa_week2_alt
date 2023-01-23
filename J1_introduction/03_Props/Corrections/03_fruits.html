@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello React</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- babel => compilation du JSX -->
+  <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+
+    const rootEl = document.getElementById('root');
+    ReactDOM.createRoot(rootEl).render(<App />);
+
+    function App() {
+      const products = [
+        { prices: [1.2, 1.1, 1.0], name: "apples" },
+        { prices: [1.8, 1.0, 1.9], name: "oranges" },
+        { prices: [1.0, 0.9, 1.1], name: "bananas" },
+      ];
+
+      return (
+        <div>
+          {products.map((product, index) => (
+            <Fruit fruitName={product.name} key={index} fruitPrices={product.prices} />
+          ))}
+        </div>
+      )
+    }
+
+    function Fruit(props) {
+      // props.fruitName
+      // props.fruitPrices
+
+      const moyenne = props.fruitPrices.reduce((sum, p) => sum + p) / props.fruitPrices.length;
+
+      return (
+        <div>
+          <p>Fruit : <strong>{props.fruitName}</strong></p>
+          Prix : <PricesList prices={props.fruitPrices} />
+          <span>Prix moyen : {moyenne.toFixed(1)} €</span>
+        </div>
+      );
+    }
+
+    function PricesList(props) {
+      return (<ul>
+        {props.prices.map((price, index) => <li key={index}>{price.toFixed(1)} €</li>)}
+      </ul>);
+    }
+
+  </script>
+</body>
+
+</html>

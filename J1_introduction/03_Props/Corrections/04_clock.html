@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello React</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- babel => compilation du JSX -->
+  <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+
+    const rootEl = document.getElementById('root');
+    const root = ReactDOM.createRoot(rootEl);
+
+    setInterval(
+      () => root.render(<Clock />),
+      1000
+    );
+
+    function Clock(props) {
+      const now = new Date();
+
+      return <h1>{now.toLocaleTimeString()}</h1>
+    }
+
+  </script>
+</body>
+
+</html>
