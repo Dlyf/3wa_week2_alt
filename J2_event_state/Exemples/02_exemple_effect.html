@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello React</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- babel => compilation du JSX -->
+  <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+
+  <style>
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const rootEl = document.getElementById('root');
+    ReactDOM.createRoot(rootEl).render(<App />);
+
+    function App() {
+
+      const [flag, setFlag] = React.useState(true);
+      return (
+        <main>
+          <TestEffect />
+
+          <hr />
+          Afficher les coordonnées souris : <input type="checkbox" checked={flag} onChange={(e) => setFlag(e.target.checked)} />
+          {flag && <EffectCleaning />}
+        </main>
+      );
+    }
+
+    function TestEffect(props) {
+      const [c, setC] = React.useState(0);
+      const [step, setStep] = React.useState(1);
+
+      React.useEffect(() => {
+        console.log('%c<TestEffect/> - 1. Montage du composant !', 'color:cyan');
+      }, []);
+
+      React.useEffect(() => {
+        console.log('%c<TestEffect/> - Le state a changé (n\'importe quel élément …)', 'color:cyan');
+      });
+
+      React.useEffect(() => {
+        console.log('%c<TestEffect/> - "c" à changé', 'color:cyan');
+      }, [c]);
+
+      React.useEffect(() => {
+        console.log('%c<TestEffect/> - "step" à changé', 'color:cyan');
+      }, [step]);
+
+      return (
+        <div>
+          <button onClick={() => setC(c => c + step)}>{c}</button>
+          <input type="number" onChange={(event) => setStep(Number(event.target.value))} value={step} />
+        </div>
+      );
+    }
+
+    function EffectCleaning(props) {
+      
+      React.useEffect(() => {
+        console.log('%c<EffectCleaning/> - Effet déclanché !', 'color: orange;');
+
+        // Attache un gestionnaire d'événement
+        document.addEventListener('mousemove', onMouseMoving);
+
+        // Je renvoie une fonction de nettoyage
+        return () => {
+          console.log('%c<EffectCleaning/> - Effet nettoyé !', 'color: orange;');
+          document.removeEventListener('mousemove', onMouseMoving);
+        }
+      }, []);
+
+      const [coords, setCoords] = React.useState({ x: 0, y: 0 });
+
+      function onMouseMoving(event) {
+        console.log('%c<EffectCleaning/> - onMouseMoving call …', 'color: orange;')
+        setCoords({ x: event.pageX, y: event.pageY });
+      }
+
+      return (
+        <pre>{coords.x}, {coords.y}</pre>
+      );
+
+    }
+  </script>
+</body>
+
+</html>
