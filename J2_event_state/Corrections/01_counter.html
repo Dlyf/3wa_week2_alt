@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello React</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- babel => compilation du JSX -->
+  <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+
+  <script src="https://unpkg.com/prop-types@15.8.1/prop-types.js"></script>
+
+  <style>
+    pre {
+      display: inline-block;
+      padding: 0.5rem;
+      font-size: 1.2rem;
+    }
+
+    .error {
+      color: red;
+      padding: 0.5rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const rootEl = document.getElementById('root');
+    ReactDOM.createRoot(rootEl).render(<App />);
+
+    function App(props) {
+      return (
+        <main>
+          <Compteur initialValue={"toto"} />
+          <Compteur />
+          <Compteur step={10} />
+          <Compteur />
+        </main>
+      );
+    }
+
+    function Compteur(props) {
+      const [counter, setCounter] = React.useState(props.initialValue);
+      const [errorMessage, setErrorMessage] = React.useState('');
+
+      function increment() {
+        setCounter((prevState) => prevState + props.step);
+        setErrorMessage('');
+      }
+
+      function decrement() {
+        setCounter((prevState) => {
+          if (prevState === 0) {
+            setErrorMessage('Le compteur ne peut être négatif !');
+            return 0;
+          }
+
+          return prevState - props.step;
+        });
+      }
+
+      return (
+        <div>
+          <button onClick={increment}>➕</button>
+          <pre>{counter}</pre>
+          <button disabled={errorMessage !== ''} onClick={decrement}>➖</button>
+          {errorMessage && <span className="error">
+            {errorMessage}
+          </span>}
+        </div>
+      );
+    }
+
+    Compteur.defaultProps = {
+      initialValue : 100,
+      step : 1
+    };
+
+    Compteur.propTypes = {
+      initialValue : PropTypes.number,
+      step : PropTypes.number
+    };
+
+  </script>
+</body>
+
+</html>
