@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello React</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- babel => compilation du JSX -->
+  <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+
+  <script src="https://unpkg.com/prop-types@15.8.1/prop-types.js"></script>
+
+  <style>
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const rootEl = document.getElementById('root');
+    ReactDOM.createRoot(rootEl).render(<App />);
+
+    function App() {
+      return (
+        <main>
+          <TestEffect />
+        </main>
+      );
+    }
+
+    function Clock() {
+      const [time, setTime] = React.useState(new Date().toLocaleTimeString());
+
+      function updateTime() {
+        console.log("call to updateTime()");
+        setTime(new Date().toLocaleTimeString());
+      }
+
+      console.log('Re-rendering du Composant <CLock />');
+      setTimeout(updateTime, 1000);
+
+      return <h1>{time}</h1>;
+    }
+    Clock.defaultProps = {};
+    Clock.propTypes = {};
+
+  </script>
+</body>
+
+</html>
