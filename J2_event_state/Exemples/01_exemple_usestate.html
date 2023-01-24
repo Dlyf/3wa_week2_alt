@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        function App () {
+
+            function frappeClavier(event) {
+                console.log(event);
+                setPseudo(event.target.value);
+                // pseudo = event.target.value
+            }
+
+            function sourisBouge(event) {
+                const { pageX, pageY } = event;
+
+                setCoords({
+                    x: pageX,
+                    y: pageY
+                });
+            }
+
+            function increment(event) {
+                setCounter(c => c + 1);
+            }
+
+            function addPseudo(event) {
+                const newPseudo = document.getElementById('p').value;
+                setListPseudos([...listePseudos, newPseudo]);
+            }
+
+            const [listePseudos, setListPseudos] = React.useState([]);
+            const [counter, setCounter] = React.useState(0);
+
+            const [coords, setCoords] = React.useState({ x : 0, y : 0 });
+            const [pseudo, setPseudo] = React.useState("JM");
+            // let pseudo = "JM"
+
+            console.log('Re-rendering du composant <App />')
+        
+            return (
+                <div style={{ border: 'thin solid red' }}>
+                    {pseudo}<br />
+                    Pseudo : <input type="text" onInput={frappeClavier} id="p" />
+                    <button onClick={addPseudo}>Ajouter le pseudo</button><br />
+                    Liste = {listePseudos.join(', ')}
+
+                    <p>Votre pseudo en majuscules : {pseudo.toUpperCase()}</p>
+                    <p>Coordonnées de la souris dans la div : {coords.x}, {coords.y}</p>
+                    <button onClick={increment}>{counter}</button>
+                </div>
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+</html>
