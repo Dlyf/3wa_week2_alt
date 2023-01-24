@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8" />
     <title>Hello React</title>
@@ -8,24 +9,63 @@
 
     <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
 </head>
+
 <body>
     <div id="root"></div>
 
     <script type="text/babel">
-
-        function App () {
+        function AppFunctional(props) {
 
             function frappeClavier(event) {
+                console.log('prop title =', props.title);
                 console.log(event)
                 console.log(`Vous avez appuyé sur : "${event.key}"`);
             }
-        
+
             return (
-                <input type="text" onKeyDown={frappeClavier} />
+                <div>
+                    <p>{props.title}</p>
+                    <input type="text" onKeyDown={frappeClavier} />
+                </div>
             );
         }
 
-        // ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+        // ===============================================
+
+        class AppClass extends React.Component {
+            constructor(props) {
+                super(props);
+
+                // this.frappeClavier = this.frappeClavier.bind(this);
+            }
+
+            frappeClavier = (event) => {
+                console.log('this =', this)
+                console.log('prop title =', this.props.title);
+                console.log(event);
+                console.log(`Vous avez appuyé sur : "${event.key}"`);
+            }
+
+            render() {
+                return (
+                    <div>
+                        <p>{this.props.title}</p>
+                        <input type="text" onKeyDown={this.frappeClavier} />
+                    </div>
+                );
+            }
+        }
+
+        // ===============================================
+
+        ReactDOM.createRoot(document.getElementById('root')).render(
+            <div>
+                <AppFunctional title="Composant fonctionnel" />
+                <hr />
+                <AppClass title="Composant de classe" />
+            </div>
+        );
     </script>
 </body>
+
 </html>
