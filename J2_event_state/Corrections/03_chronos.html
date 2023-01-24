@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello React</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- babel => compilation du JSX -->
+  <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+
+  <script src="https://unpkg.com/prop-types@15.8.1/prop-types.js"></script>
+
+  <style>
+    .chrono {
+      display: inline-block;
+      background-color: silver;
+      padding: 0.5rem;
+      border-radius: 4px;
+      margin: 0.5rem;
+    }
+
+    .chrono>pre {
+      text-align: center;
+      font-size: 2em;
+      margin: 0.5em 0 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const rootEl = document.getElementById('root');
+    ReactDOM.createRoot(rootEl).render(<App />);
+
+    function App() {
+      return (
+        <main>
+          <Chrono interval={10} maxValue={500} />
+          <Chrono step={4} />
+          <Chrono binary={true} />
+        </main>
+      );
+    }
+
+    function Chrono(props) {
+
+      const [counter, setCounter] = React.useState(0);
+      const [isRunning, setIsRunning] = React.useState(false);
+
+      React.useEffect(() => {
+        let timer;
+
+        if (isRunning) {
+          timer = setInterval(increment, props.interval);
+        }
+
+        return () => {
+          clearInterval(timer);
+        }
+      }, [isRunning]);
+
+      React.useEffect(() => {
+        if (counter >= props.maxValue) {
+          setCounter(props.maxValue);
+          pause();
+        }
+      }, [counter]);
+
+      function play() {
+        setIsRunning(true);
+      }
+      
+      function pause() {
+        setIsRunning(false);
+      }
+
+      function increment() {
+        setCounter(c => c + props.step);
+      }
+
+      function reset() {
+        pause();
+        setCounter(0);
+      }
+
+      const counterValue = props.binary ? counter.toString(2) : counter;
+
+      return (
+        <div className="chrono">
+          <div>
+            <button onClick={play} disabled={isRunning}>Play</button>
+            <button onClick={pause} disabled={!isRunning}>Pause</button>
+            <button onClick={reset}>Reset</button>
+          </div>
+          <pre>{counterValue}</pre>
+        </div>
+      )
+    }
+
+    Chrono.defaultProps = {
+      interval : 1000,
+      maxValue : 20,
+      step : 1,
+      binary : false
+    };
+
+  </script>
+</body>
+
+</html>
