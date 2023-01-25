@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello React</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+
+  <style>
+    form {
+      padding: 1rem;
+    }
+
+    form label {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+
+    function CreateUser(props) {
+      function create(newUser) {
+        console.log('Créer l\'utilisateur :', newUser);
+        // Créer un utilisateur via un API CALL
+        // …
+      }
+
+      return (
+        <main>
+          <Form title={"Créer un utilisateur"} onSubmit={create} />
+        </main>
+      );
+    }
+
+    function UpdateUser(props) {
+      const currentUser = React.useRef({
+        nom: 'CLERY',
+        prenom: 'Jean-Marie',
+        email: 'jm@mail.com',
+        mdp: 'azerty',
+        age: '34'
+      });
+
+      function update(userUpdated) {
+        console.log('Utilisateur mis à jour : ', userUpdated);
+        // API Call …
+      }
+
+      return (
+        <main>
+          <Form title={"Modifier un utilisateur"} user={currentUser.current} onSubmit={update} />
+        </main>
+      );
+    }
+
+    function Form(props) {
+      const initialState = React.useRef(props.user || {
+        nom: '',
+        prenom: '',
+        email: '',
+        mdp: '',
+        age: 0
+      });
+
+      const [formData, setFormData] = React.useState(initialState.current);
+
+      function onFormSubmit(event) {
+        event.preventDefault(); // Empêche le rechargement du navigateur
+        props.onSubmit(formData); // Affiche les données validées
+        setFormData({
+          nom: '',
+          prenom: '',
+          email: '',
+          mdp: '',
+          age: 0
+        }); // Vide le state (et le formulaire)
+      }
+
+      function onFieldUpdate(event) {
+        setFormData({
+          ...formData,
+          [event.target.name]: event.target.value
+        });
+      }
+
+      return (
+        <React.Fragment>
+          <h1>{props.title}</h1>
+          <form method="get" action="?" onSubmit={onFormSubmit}>
+            <label>
+              Nom : <input type="text" name="nom" onChange={onFieldUpdate} value={formData.nom} />
+            </label>
+            <label>
+              Prénom : <input type="text" name="prenom" onChange={onFieldUpdate} value={formData.prenom} />
+            </label>
+            <label>
+              Email : <input type="email" name="email" onChange={onFieldUpdate} value={formData.email} />
+            </label>
+            <label>
+              Mot de passe : <input type="password" name="mdp" onChange={onFieldUpdate} value={formData.mdp} />
+            </label>
+            <label>
+              Age : <input type="number" name="age" onChange={onFieldUpdate} value={formData.age} />
+            </label>
+
+            <button type="submit">Valider</button>
+          </form>
+        </React.Fragment>
+      )
+    }
+
+    // Render App
+    ReactDOM
+      .createRoot(document.getElementById('root'))
+      .render(
+        <React.Fragment>
+          <CreateUser />
+          <UpdateUser />
+        </React.Fragment>
+      );
+  </script>
+</body>
+
+</html>
