@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello React</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+
+  <style>
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    // Render App
+    ReactDOM
+      .createRoot(document.getElementById('root'))
+      .render(
+        <App />
+      );
+
+    function App() {
+      const [users, setUsers] = React.useState(null);
+
+      /* @TODO :
+        Au montage du composant, aller chercher les données JSON suivantes avec un fetch() :
+        https://randomuser.me/api/?results=10&nat=fr&inc=gender,name,email,id
+        Vous placerez ces données de tableau dans le state "users"
+      */
+
+      return (
+        <main>
+          <h1>Utilisateurs</h1>
+          {/* @TODO :
+              Ecrire le .map sur le tableau "users" (si celui-ci existe) et utilisez le composant <User> ci-dessous pour afficher un utilisateur ()
+          */}
+        </main>
+      )
+    }
+
+    // Ne pas toucher ce composant pour l'instant,
+    // Observez simplement son fonctionnement pour l'utiliser dans le .map de <App />
+    function User({ user }) {
+      const { title, first, last } = user.name;
+      return (
+        <p>{title} {first} {last}</p>
+      )
+    }
+  </script>
+</body>
+
+</html>
