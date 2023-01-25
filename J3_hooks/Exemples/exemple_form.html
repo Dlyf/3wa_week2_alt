@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello React</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+
+  <style>
+    form {
+      padding: 1rem;
+    }
+
+    form label {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    function App(props) {
+      return (
+        <main>
+          <FormDataUnPeuMieux />
+        </main>
+      );
+    }
+
+    function FormDataUnPeuMieux(props) {
+      const initialState = React.useRef({
+        nom: '',
+        prenom: '',
+        email: '',
+        mdp: '',
+        age: 0
+      });
+
+      const [formData, setFormData] = React.useState(initialState.current);
+
+      function onFormSubmit(event) {
+        event.preventDefault();
+
+        console.log(formData);
+
+        // Vider le formulaire
+        setFormData(initialState.current);
+      }
+
+      function onFieldUpdate(event) {
+        setFormData({
+          ...formData,
+          [event.target.name]: event.target.value
+        });
+        // ------------------
+        /* if (event.target.name === 'nom') {
+          setFormData({ ...formData, nom : event.target.value });
+        }
+        if (event.target.name === 'prenom') {
+          setFormData({ ...formData, prenom : event.target.value });
+        }
+        if (event.target.name === 'email') {
+          setFormData({ ...formData, email : event.target.value });
+        }
+        if (event.target.name === 'mdp') {
+          setFormData({ ...formData, mdp : event.target.value });
+        } */
+      }
+
+      return (
+        <form method="get" action="?" onSubmit={onFormSubmit}>
+          <label>
+            Nom : <input type="text" name="nom" onChange={onFieldUpdate} value={formData.nom} />
+          </label>
+          <label>
+            Prénom : <input type="text" name="prenom" onChange={onFieldUpdate} value={formData.prenom} />
+          </label>
+          <label>
+            Email : <input type="email" name="email" onChange={onFieldUpdate} value={formData.email} />
+          </label>
+          <label>
+            Mot de passe : <input type="password" name="mdp" onChange={onFieldUpdate} value={formData.mdp} />
+          </label>
+          <label>
+            Age : <input type="number" name="age" onChange={onFieldUpdate} value={formData.age} />
+          </label>
+
+          <button type="submit">Valider</button>
+        </form>
+      )
+    }
+
+    // ===============================================
+
+    function FormDataPasOuf(props) {
+      const [nom, setNom] = React.useState('');
+      const [prenom, setPrenom] = React.useState('');
+      const [email, setEmail] = React.useState('');
+      const [mdp, setMdp] = React.useState('');
+
+      function onFormSubmit(event) {
+        event.preventDefault();
+
+        console.log('Nom =', nom);
+        console.log('Prenom =', prenom);
+        console.log('Email =', email);
+        console.log('Mdp =', mdp);
+
+        // Vider le formulaire
+        setNom('');
+        setPrenom('');
+        setEmail('');
+        setMdp('');
+      }
+
+      return (
+        <form method="get" action="?" onSubmit={onFormSubmit}>
+          <label>
+            Nom : <input type="text" name="nom" onChange={(e) => setNom(e.target.value)} value={nom} />
+          </label>
+          <label>
+            Prénom : <input type="text" name="prenom" onChange={(e) => setPrenom(e.target.value)} value={prenom} />
+          </label>
+          <label>
+            Email : <input type="email" name="email" onChange={(e) => setEmail(e.target.value)} value={email} />
+          </label>
+          <label>
+            Mot de passe : <input type="password" name="mdp" onChange={(e) => setMdp(e.target.value)} value={mdp} />
+          </label>
+
+          <button type="submit">Valider</button>
+        </form>
+      )
+    }
+
+    // ===============================================
+
+    ReactDOM.createRoot(document.getElementById('root')).render(
+      <App />
+    );
+  </script>
+</body>
+
+</html>

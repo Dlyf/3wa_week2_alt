@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+
+    <style>
+        input:focus {
+            border: 3px dashed orange;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        function RefExemple1(props) {
+            const [input, setInput] = React.useState('');
+
+            let nbRenders = React.useRef(0);
+            nbRenders.current++;
+
+            return (
+                <div>
+                    {input}
+                    <input type="text" onChange={e => setInput(e.target.value)} />
+                    <hr />
+                    <p>
+                        {nbRenders.current}
+                    </p>
+                </div>
+            );
+        }
+        
+        function RefExemple2(props) {
+
+            function sendDataFake(event) {
+                event.preventDefault();
+                console.log('Données envoyées !');
+                console.log(inputRef.current)
+                inputRef.current.value = '';
+                inputRef.current.focus();
+            }
+
+            const inputRef = React.useRef();
+
+            return (
+                <form onSubmit={sendDataFake}>
+                    <input type="text" ref={inputRef} />
+                    <button type="submit">envoyer</button>
+                </form>
+            );
+        }
+
+        // ===============================================
+
+        ReactDOM.createRoot(document.getElementById('root')).render(
+            <RefExemple2 />
+        );
+    </script>
+</body>
+
+</html>
