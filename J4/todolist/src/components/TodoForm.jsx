@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-function TodoForm() {
+function TodoForm(props) {
+  const [taskTitle, setTaskTitle] = useState('');
+
+  function submitForm(event) {
+    event.preventDefault();
+    props.onTask(taskTitle);
+    setTaskTitle('');
+  }
+
   return (
-    <form>
-      <input type="text" placeholder="Nouvelle tâche" />
+    <form onSubmit={submitForm}>
+      <input type="text" placeholder="Nouvelle tâche" onChange={(e) => setTaskTitle(e.target.value)} value={taskTitle} />
+      <button type="submit">Ajouter</button>
     </form>
   )
 }
