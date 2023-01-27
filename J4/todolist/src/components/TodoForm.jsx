@@ -5,8 +5,10 @@ function TodoForm(props) {
 
   function submitForm(event) {
     event.preventDefault();
-    props.onTask(taskTitle);
-    setTaskTitle('');
+    if (taskTitle.trim() !== '') {
+      props.onTask(taskTitle);
+      setTaskTitle('');
+    }
   }
 
   return (
