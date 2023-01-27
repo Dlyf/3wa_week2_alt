@@ -70,3 +70,10 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.Todolist {
+  margin: 1rem;
+  padding: 1rem;
+  border: thin solid gray;
+  border-radius: 3px;
+}

@@ -3,14 +3,8 @@ import TodoForm from "./TodoForm";
 import Todoitem from "./Todoitem";
 import { v4 as uuidv4 } from "uuid";
 
-function Todolist() {
-  const [tasks, setTasks] = useState([
-    { id: uuidv4(), title: 'Apprendre JS', isCompleted: true },
-    { id: uuidv4(), title: 'Apprendre CSS', isCompleted: true },
-    { id: uuidv4(), title: 'Apprendre HTML', isCompleted: true },
-    { id: uuidv4(), title: 'Apprendre React', isCompleted: false },
-    { id: uuidv4(), title: 'Apprendre Redux', isCompleted: false },
-  ]);
+function Todolist(props) {
+  const [tasks, setTasks] = useState(props.tasks);
   
   const [showCompleted, setShowCompleted] = useState(null);
   // null, true, false
@@ -47,7 +41,10 @@ function Todolist() {
   });
 
   return (
-    <>
+    <div className="Todolist">
+      <h1>{props.title}</h1>
+      <a href="#" onClick={() => props.onDeleteList(props.listId)}>❌</a>
+      
       <TodoForm onTask={addTask} />
       <p>{remaining}/{total} effectuées</p>
 
@@ -60,7 +57,7 @@ function Todolist() {
       {filteredTasks.map(task => (
         <Todoitem key={task.id} task={task} updateTask={updateTask} removeTask={removeTask} />
       ))}
-    </>
+    </div>
   )
 }
 
