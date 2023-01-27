@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Todolist from './components/Todolist'
 import { v4 as uuidv4 } from "uuid";
 import TodoForm from './components/TodoForm';
+import TodoContext from './TodoContext';
 
 function App() {
 
@@ -42,15 +43,19 @@ function App() {
     setTodolists([...todolists]);
   }
 
+  const [state, setState] = useState({ name: 'coco' });
+
   return (
-    <div className="container">
-      <h1>Application de gestion de tâches</h1>
-      <hr />
-      <TodoForm onTask={addTodolist} />
-      {todolists.map(todolist => (
-        <Todolist key={todolist.id} tasks={todolist.tasks} title={todolist.title} listId={todolist.id} onDeleteList={deleteList} />
-      ))}
-    </div>
+    <TodoContext.Provider value={{state, setState}}>
+      <div className="container">
+        <h1>Application de gestion de tâches</h1>
+        <hr />
+        <TodoForm onTask={addTodolist} />
+        {todolists.map(todolist => (
+          <Todolist key={todolist.id} tasks={todolist.tasks} title={todolist.title} listId={todolist.id} onDeleteList={deleteList} />
+        ))}
+      </div>
+    </TodoContext.Provider>
   )
 }
 
