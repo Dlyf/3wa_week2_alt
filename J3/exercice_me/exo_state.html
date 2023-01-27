@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello React</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+
+  <style>
+    form {
+      padding: 1rem;
+    }
+    form label {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    function App(props) {
+      return (
+        <main>
+          <FormData />
+        </main>
+      );
+    }
+
+    function FormData(props) {
+        const [lastName, setLastname] = React.useState("")
+        const [name, setName] = React.useState("")
+        const [email, setEmail] = React.useState("")
+        const [password, setPassword] = React.useState("")
+        
+        // const handleSubmit = (event) => {
+        //     event.preventDefault();
+        //     console.log(`Submitting Name ${name}`);
+        // }
+
+        // const handleClick = (event) => {
+        //     event.preventDefault();
+        //     console.log("test");
+        // }
+        
+      return (
+
+      <form  method="get" action="?">
+            // variable d'état 
+          <label>
+            Nom : <input type="text" defaultValue={lastName} name="nom" onClick={() => console.log("test")} />
+          </label>
+          <label>
+            Prénom : <input type="text" defaultValue={name} name="prenom" onClick={() => console.log("test2")} />
+          </label>
+          <label>
+            Email : <input type="email" defaultValue={email} name="email" onClick={() => console.log("test3")} />
+          </label>
+          <label>
+            Mot de passe : <input type="password" defaultValue={password} name="mdp" onClick={() => console.log("test4")} />
+          </label>
+          <button type="submit">Valider</button>
+        </form>
+
+        // <form onSubmit={handleSubmit} method="get" action="?">
+        //   <label>
+        //     Nom : <input type="text" defaultValue={lastName} name="nom" onClick={() => console.log("test")} />
+        //   </label>
+        //   <label>
+        //     Prénom : <input type="text" defaultValue={name} name="prenom" onClick={() => console.log("test2")} />
+        //   </label>
+        //   <label>
+        //     Email : <input type="email" defaultValue={email} name="email" onClick={() => console.log("test3")} />
+        //   </label>
+        //   <label>
+        //     Mot de passe : <input type="password" defaultValue={password} name="mdp" onClick={() => console.log("test4")} />
+        //   </label>
+        //   <button type="submit">Valider</button>
+        // </form>
+        
+      )
+    }
+
+    // ===============================================
+
+    ReactDOM.createRoot(document.getElementById('root')).render(
+      <App />
+    );
+  </script>
+</body>
+
+</html>

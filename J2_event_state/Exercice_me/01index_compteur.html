@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello React</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- babel => compilation du JSX -->
+  <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    function App(props) {
+        const [value, setValue] = React.useState(0);
+        const [valueTwo, setValueTwo] = React.useState(0);
+
+        function Hello(props) {
+            return <h1>Hello {props.name}</h1>
+        }
+
+        function Increment(event) {
+            setValue(x => x + 1)
+        }
+
+        function Decrement(event) {
+            let x = 0;
+            console.log(x)
+            setValueTwo(x);
+            if (x) {
+                return setValueTwo
+            }
+
+        }
+
+        return (
+            <div>
+                <button onClick={Increment}>+</button>{value}
+                <button onClick={Decrement}>-</button>{valueTwo}
+            </div>
+        );
+
+    }
+
+    const rootEl = document.getElementById('root');;
+    ReactDOM.createRoot(rootEl).render(
+        <App />
+    );
+    // 1. Créez deux boutons
+    // 2. le premier incremente le compteur de + 1 et l'autre de moins -1
+    // 3. Affichez ce dernier dans le DOM
+// objet Counter un rendering de deux boutons 
+// faire des éléments statiques 
+    
+  </script>
+</body>
+
+</html>

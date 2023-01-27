@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello React</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+
+  <style>
+    .form-field {
+      padding: 0.5rem;
+    }
+
+    .form-field input {
+      padding: 0.25rem 0.5rem;
+      border-radius: 2px;
+      border: thin solid #8a8a8a;
+    }
+
+    .form-field label {
+      margin-right: 0.5rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    // Render App
+    ReactDOM
+      .createRoot(document.getElementById('root'))
+      .render(
+        <App />
+      );
+
+    function App() {
+
+      const [formData, setFormData] = React.useState({
+        nom : '',
+        prenom : '',
+        mail: ''
+      });
+
+      // mettre à jour l'élément
+      function onFieldUpdate(event) {
+        setFormData({
+          ...formData,
+          [event.target.name]: event.target.value
+        });
+      }
+
+      return (
+        <form>
+
+          <pre>{JSON.stringify(formData, null, 2)}</pre>
+
+          <FormInput type="text" name="nom" placeholder="Votre nom …" onChange={onFieldUpdate}>
+            Nom :
+          </FormInput>
+
+          <FormInput type="text" maxLength="10" name="prenom" placeholder="Votre prénom …" onChange={onFieldUpdate}>
+            Prénom :
+          </FormInput>
+
+          <FormInput type="email" name="mail" placeholder="Votre email …" onChange={onFieldUpdate}>
+            Email :
+          </FormInput>
+        </form>
+      )
+    }
+
+    function FormInput({ children, onChange, ...inputProps }) {
+      console.log(children, inputProps);
+
+      return (
+        <div className="form-field">
+          <label htmlFor={inputProps.name}>
+            {children}
+          </label>
+          <input {...inputProps} id={inputProps.name}/>
+        </div>
+      )
+    }
+  </script>
+</body>
+
+</html>

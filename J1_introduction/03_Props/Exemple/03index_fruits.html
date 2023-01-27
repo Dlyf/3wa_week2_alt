@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello React</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- babel => compilation du JSX -->
+  <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+
+
+    const rootEl = document.getElementById('root');
+    ReactDOM.createRoot(rootEl).render(<App />)
+    
+    function App(props) {
+      const products = [
+        { prices: [1.2, 1.1, 1.0], name: "apples" },
+        { prices: [1.8, 1.0, 1.9], name: "oranges" },
+        { prices: [1.0, 0.9, 1.1], name: "bananas" },
+      ];
+
+      return (
+        <ul>
+          {products.map((product, index) =>(<Product name={product.name} prices={product.prices} key={index} />) )}
+        </ul>
+          // <Student name={students[0].name} notes={students[0].notes} />
+          // <Student name={students[1].name} notes={students[1].notes} />
+      )
+    }
+    // afficher le nom et la moyenne à partir des données
+
+    function Product(props) {
+      // calculer pour chaque étudiant 
+      // calcul moyenne
+      const total = props.prices.reduce((total, price) => total + price)
+      const moyenne = props.prices.reduce((total, price) => total + price / props.prices.length);
+      return <li>1. L'ensemble des prix de {props.name} a une totale de : {total.toFixed(1)}</li>, 
+      <li>1. L'ensemble des prix de {props.name} a une totale de : {moyenne.toFixed(1)}</li>
+      
+    }
+  </script>
+</body>
+
+</html>

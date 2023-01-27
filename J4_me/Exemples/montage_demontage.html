@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello React</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+
+  <style>
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    ReactDOM
+      .createRoot(document.getElementById('root'))
+      .render(
+        <App />
+      );
+
+    function App() {
+      const [display, setDisplay] = React.useState(true);
+      const [pseudo, setPseudo] = React.useState('');
+
+      React.useEffect(() => {
+        const vowels = 'aeiouy'.split('');
+        console.log(vowels.includes(pseudo.at(-1)) ? 'VOYELLE' : 'CONSONNE');
+      }, [pseudo]);
+
+      return (
+        <div>
+          <input type="text" onChange={(e) => setPseudo(e.target.value)} value={pseudo} />
+          <p>Pseudo : {pseudo}</p>
+          <br />
+          <input type="checkbox" checked={display} value={display} onChange={(e) => setDisplay(e.target.checked)} />
+          {display}
+        </div>
+      )
+    }
+
+    function HelloFunc() {
+
+      function onClick() { console.log(`${Math.random()} - Click !`) };
+
+      React.useEffect(() => {
+        document.addEventListener('click', onClick);
+
+        return () => {
+          document.removeEventListener('click', onClick);
+        };
+      });
+
+      return <p>Je suis &lt;Hello /&gt;</p>
+    }
+    
+    class HelloClass extends React.Component {
+
+      constructor(props) {
+        super(props);
+
+        this.onClick = this.onClick.bind(this);
+      }
+
+      onClick() {
+        this.log();
+      }
+      
+      // Si on ne veut pas écrire le ".bind(this)" dans le constructeur, on peut écrire ceci :
+      // Attention : Invalide avec babel standalone
+      onClick = () => {
+        this.log();
+      }
+
+      log() {
+        console.log(`${Math.random()} - Click !`);
+      }
+
+      componentDidMount() {
+        document.addEventListener('click', this.onClick);
+      }
+
+      componentWillUnmount() {
+        document.removeEventListener('click', this.onClick);
+      }
+
+      render() {
+        return <p>Je suis &lt;Hello /&gt;</p>;
+      }
+    }
+  </script>
+</body>
+
+</html>
